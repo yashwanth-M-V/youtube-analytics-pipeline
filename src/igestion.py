@@ -47,3 +47,26 @@ def fetch_comments(video_id: str, max_comments: int = 100):
         df["published_at"] = pd.to_datetime(df["published_at"])
 
     return df
+
+
+def fetch_video_details(video_id: str):
+    youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
+
+    request = youtube.videos().list(
+        part="snippet,statistics",
+        id=video_id
+    )
+    response = request.execute()
+
+    if "items" in response and len(response["items"]) > 0:
+        item = response["items"][0]
+        snippet = item["snippet"]
+
+        return {
+            "title": snippet.get("title"),
+            "channel": snippet.get("channelTitle"),
+            "published": snippet.get("publishedAt"),
+            "description": snippet.get("description", ""),
+        }
+
+    return None

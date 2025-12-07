@@ -1,4 +1,7 @@
 import pandas as pd
+from collections import Counter
+
+
 
 def sentiment_counts(df: pd.DataFrame):
     return df["sentiment"].value_counts().to_dict()
@@ -41,3 +44,17 @@ def early_performance(df: pd.DataFrame):
         "day3": day3,
         "day5": day5,
     }
+
+
+def top_words(df, sentiment, n=15):
+    subset = df[df["sentiment"] == sentiment]
+    all_words = [word for tokens in subset["tokens"] for word in tokens]
+    return Counter(all_words).most_common(n)
+
+def comments_by_hour(df: pd.DataFrame):
+    return (
+        df.groupby("hour")
+          .size()
+          .reset_index(name="comment_count")
+          .sort_values("hour")
+    )

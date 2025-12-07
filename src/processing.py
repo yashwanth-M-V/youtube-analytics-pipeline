@@ -1,5 +1,9 @@
 import pandas as pd
 from nltk.sentiment import SentimentIntensityAnalyzer
+import re
+from nltk.corpus import stopwords
+STOPWORDS = set(stopwords.words("english"))
+
 
 sia = SentimentIntensityAnalyzer()
 
@@ -39,4 +43,12 @@ def add_time_features(df: pd.DataFrame) -> pd.DataFrame:
 def process_comments(df: pd.DataFrame) -> pd.DataFrame:
     df = add_sentiment(df)
     df = add_time_features(df)
+    df["tokens"] = df["clean_text"].apply(tokenize)
     return df
+
+
+def tokenize(text):
+    text = text.lower()
+    text = re.sub(r"[^a-z\s]", "", text)
+    words = text.split()
+    return [w for w in words if w not in STOPWORDS and len(w) > 2]
