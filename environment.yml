@@ -4,7 +4,7 @@ channels:
 dependencies:
   - python=3.12.3
   - pip
-  - python-dotenv
+  - python-dotenv==1.0.1
   - pip:
       - streamlit==1.51.0
       - azure-storage-blob
