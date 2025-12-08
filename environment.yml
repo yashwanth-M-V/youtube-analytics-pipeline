@@ -4,11 +4,10 @@ channels:
 dependencies:
   - python=3.12.3
   - pip
-  - python-dotenv==1.0.1
   - pip:
       - streamlit==1.51.0
-      - azure-storage-blob
-      - python-dotenv
+      - python-dotenv==1.0.0
+      - google-cloud-storage==2.11.0
       - pandas
       - altair==6.0.0
       - attrs==25.4.0
