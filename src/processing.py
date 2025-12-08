@@ -1,7 +1,15 @@
 import pandas as pd
 from nltk.sentiment import SentimentIntensityAnalyzer
 import re
+
+import nltk
 from nltk.corpus import stopwords
+
+try:
+    stopwords.words("english")
+except LookupError:
+    nltk.download("stopwords")
+
 STOPWORDS = set(stopwords.words("english"))
 
 
